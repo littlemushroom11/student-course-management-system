@@ -1,0 +1,337 @@
+{% extends "teaBack.html" %}
+{% block welcome_block %}
+
+        <div class="welcome"> &nbsp&nbsp<br>欢迎你，{{ name }}！</div>
+{% endblock %}
+{% block selection %}
+        <br>
+        <br>
+        <div class="submit-button"><a href="{% url 'studentPage' '4' %}">个人信息</a></div>
+        <br>
+        <br>
+        <div class="submit-button"><a href="{% url 'studentPage' '1' %}">查询课程</a></div>
+        <br>
+        <br>
+        <div class="submit-button"><a href="{% url 'studentPage' '2' %}">选课</a></div>
+        <br>
+        <div class="submit-button"><a href="{% url 'studentPage' '5' %}">退课</a></div>
+        <br>
+        <br>
+        <div class="submit-button"><a href="{% url 'studentPage' '3' %}">成绩查询</a></div>
+{% endblock %}
+{% block table_container %}
+    {% if operation == 'login' %}
+        <br>
+        <h2>&nbsp&nbsp&nbsp&nbsp&nbsp我的课程:</h2>
+        <table>
+            <tr>
+                <th>课程号</th>
+                <th>课程名</th>
+                <th>学分</th>
+                <th>教师</th>
+                <th>先修课程</th>
+                <th>操作</th>
+            </tr>
+            {% for course in courses %}
+            <tr>
+                <td>{{ course.0 }}</td>
+                <td>{{ course.1 }}</td>
+                <td>{{ course.2 }}</td>
+                <td>{{ course.4 }}</td>
+                {% if course.3 != None %}
+                    <td>{{ course.3 }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                <td><a href="{% url 'view' operation='view_students' arg=course.0 %}">
+                    <button class="button">查看班级同学</button></a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% elif operation == '1' %}
+        <h2>&nbsp开课课程查询</h2>
+        <form action="/course_finding/" method="post">
+        {% csrf_token %}
+        <div>
+        <label for="courseCode">&nbsp&nbsp课程号:&nbsp</label>
+        <input type="text" name="cno">
+        </div>
+        <div>
+        <label for="courseName">&nbsp&nbsp课程名:&nbsp</label>
+        <input type="text" name="cname">
+        </div>
+        <div>
+        <label for="credits">&nbsp&nbsp&nbsp&nbsp学分:&nbsp&nbsp</label>
+        <input type="number" name="credit">
+        </div>
+        <div>
+        <label for="teacher">&nbsp&nbsp&nbsp&nbsp教师:&nbsp&nbsp</label>
+        <input type="text" name="teacher">
+        </div>
+        <div>
+        <label for="prerequisite">先修课程:</label>
+        <input type="text" name="pcno">
+        </div>
+        <div>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+        <input type="submit" value="查询">
+        <input type="hidden" name="role" value="student">
+        </div>
+        </form>
+        <h3>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp课程列表:</h3>
+        <table>
+            <tr>
+                <th>课程号</th>
+                <th>课程名</th>
+                <th>学分</th>
+                <th>教师</th>
+                <th>先修课程</th>
+            </tr>
+            {% for course in courses %}
+            <tr>
+                <td>{{ course.0 }}</td>
+                <td>{{ course.1 }}</td>
+                <td>{{ course.2 }}</td>
+                <td>{{ course.4 }}</td>
+                {% if course.3 != None %}
+                    <td>{{ course.3 }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    {% elif operation == '2' %}
+        <br>
+        <h2>&nbsp&nbsp&nbsp&nbsp&nbsp选课:</h2>
+        <h4>请在以下未选课程中进行选课<h4>
+        <table>
+            <tr>
+                <th>课程号</th>
+                <th>课程名</th>
+                <th>学分</th>
+                <th>教师</th>
+                <th>先修课程</th>
+                <th>操作</th>
+            </tr>
+            {% for course in courses %}
+            <tr>
+                <td>{{ course.0 }}</td>
+                <td>{{ course.1 }}</td>
+                <td>{{ course.2 }}</td>
+                <td>{{ course.4 }}</td>
+                {% if course.3 != None %}
+                    <td>{{ course.3 }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                <td><a href="{% url 'select_course' operation='select' arg=course.0 %}">
+                    <button class="button">选课</button></a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% elif operation == 'class_student' %}
+        <table>
+            <tr>
+                <th>学号</th>
+                <th>姓名</th>
+                <th>学院</th>
+                <th>专业</th>
+                <th>年级</th>
+            </tr>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.0 }}</td>
+                <td>{{ student.1 }}</td>
+                <td>{{ student.2 }}</td>
+                <td>{{ student.3 }}</td>
+                <td>{{ student.4 }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% elif operation == '2_success' %}
+        <br>
+        <h2>&nbsp&nbsp&nbsp&nbsp&nbsp选课: &nbsp;&nbsp;&nbsp;选课成功！</h2>
+        <h4>请在以下未选课程中进行选课<h4>
+        <table>
+            <tr>
+                <th>课程号</th>
+                <th>课程名</th>
+                <th>学分</th>
+                <th>教师</th>
+                <th>先修课程</th>
+                <th>操作</th>
+            </tr>
+            {% for course in courses %}
+            <tr>
+                <td>{{ course.0 }}</td>
+                <td>{{ course.1 }}</td>
+                <td>{{ course.2 }}</td>
+                <td>{{ course.4 }}</td>
+                {% if course.3 != None %}
+                    <td>{{ course.3 }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                <td><a href="{% url 'select_course' operation='select' arg=course.0 %}">
+                    <button class="button">选课</button></a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% elif operation == 'grade' %}
+        <h2>&nbsp&nbsp&nbsp&nbsp成绩:</h2>
+        <h4>尚未打分的课程不予显示</h4>
+        <table>
+            <tr>
+                <th>课程号</th>
+                <th>课程名</th>
+                <th>学分</th>
+                <th>教师</th>
+                <th>先修课程</th>
+                <th>成绩</th>
+            </tr>
+            {% for course in courses %}
+            <tr>
+                <td>{{ course.0 }}</td>
+                <td>{{ course.1 }}</td>
+                <td>{{ course.2 }}</td>
+                <td>{{ course.3 }}</td>
+                <td>{{ course.4 }}</td>
+                <td>{{ course.5 }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% elif operation == 'information' %}
+        <h2> &nbsp;&nbsp;&nbsp;&nbsp;我的信息</h2>
+        <table class="table2">
+            <tr>
+                <th>学号</th>
+                <td>{{ information.sno }}</td>
+            </tr>
+            <tr>
+                <th>姓名</th>
+                <td>{{ information.sname }}</td>
+            </tr>
+            <tr>
+                <th>性别</th>
+                {% if information.ssex == 'm' %}
+                <td>男</td>
+                    {% else %}
+                <td>女</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th>出生日期</th>
+                <td>{{ information.sbirthdate }}</td>
+            </tr>
+            <tr>
+                <th>学院</th>
+                <td>{{ information.scollege }}</td>
+            </tr>
+            <tr>
+                <th>专业</th>
+                <td>{{ information.smajor }}</td>
+            </tr>
+            <tr>
+                <th>年级</th>
+                <td>{{ information.sgrade }}</td>
+            </tr>
+            <tr>
+                <th>密码</th>
+                <td>
+                    <a href="{% url 'stu_updatePasswd' operation='update_passwd' arg=information.sno %}">
+                    <button class="button">修改密码</button></a>
+                </td>
+            </tr>
+        </table>
+    {% elif operation == 'change_passwd' %}
+        <h2> &nbsp;&nbsp;&nbsp;&nbsp;我的信息</h2>
+        <table class="table2">
+            <tr>
+                <th>学号</th>
+                <td>{{ information.sno }}</td>
+            </tr>
+            <tr>
+                <th>姓名</th>
+                <td>{{ information.sname }}</td>
+            </tr>
+            <tr>
+                <th>性别</th>
+                {% if information.ssex == 'm' %}
+                <td>男</td>
+                    {% else %}
+                <td>女</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <th>出生日期</th>
+                <td>{{ information.sbirthdate }}</td>
+            </tr>
+            <tr>
+                <th>学院</th>
+                <td>{{ information.scollege }}</td>
+            </tr>
+            <tr>
+                <th>专业</th>
+                <td>{{ information.smajor }}</td>
+            </tr>
+            <tr>
+                <th>年级</th>
+                <td>{{ information.sgrade }}</td>
+            </tr>
+            <tr>
+                <th>密码</th>
+                <td>修改密码</td>
+            </tr>
+        </table>
+        <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">提交</button>
+        </form>
+        {% if form.errors %}
+         <ul>
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li>{{ field.label }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+         </ul>
+        {% endif %}
+        {% elif operation == 'changePasswd_success' %}
+        <h2> 密码修改成功！</h2>
+    {% elif operation == '5' %}
+        <br>
+        <h2>&nbsp&nbsp&nbsp&nbsp&nbsp请选择要退课的课程:</h2>
+        <table>
+            <tr>
+                <th>课程号</th>
+                <th>课程名</th>
+                <th>学分</th>
+                <th>教师</th>
+                <th>先修课程</th>
+                <th>操作</th>
+            </tr>
+            {% for course in courses %}
+            <tr>
+                <td>{{ course.0 }}</td>
+                <td>{{ course.1 }}</td>
+                <td>{{ course.2 }}</td>
+                <td>{{ course.4 }}</td>
+                {% if course.3 != None %}
+                    <td>{{ course.3 }}</td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                {% if course.5 == False %}
+                   <td><a href="{% url 'delete_course' operation='delete_course' arg=course.0 %}">
+                    <button class="button">退课</button></a></td>
+                {% else %}
+                    <td>课程已打分，不允许退课</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    {% elif operation == 'delete_success' %}
+        <h2> 《{{ cno }}{{ cname }}》课程退课成功！</h2>
+    {% endif %}
+{% endblock %}

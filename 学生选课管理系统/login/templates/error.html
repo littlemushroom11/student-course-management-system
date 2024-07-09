@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>课程查询</title>
+</head>
+<body>
+
+<h1>课程查询</h1>
+
+<form onsubmit="submitForm(event)">
+    <div>
+        <label for="courseCode">课程号:</label>
+        <input type="text" id="courseCode" name="courseCode">
+    </div>
+    <div>
+        <label for="courseName">课程名:</label>
+        <input type="text" id="courseName" name="courseName">
+    </div>
+    <div>
+        <label for="credits">学分:</label>
+        <input type="number" id="credits" name="credits">
+    </div>
+    <div>
+        <label for="teacher">教师:</label>
+        <input type="text" id="teacher" name="teacher">
+    </div>
+    <div>
+        <label for="prerequisite">先修课程:</label>
+        <input type="text" id="prerequisite" name="prerequisite">
+    </div>
+    <div>
+        <input type="submit" value="查询">
+    </div>
+</form>
+
+<h2>课程列表</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>课程号</th>
+            <th>课程名</th>
+            <th>学分</th>
+            <th>教师</th>
+            <th>先修课程</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- 这里将动态填充查询结果，或显示静态数据作为示例 -->
+        <tr>
+            <td>101</td>
+            <td>数学基础</td>
+            <td>4</td>
+            <td>张老师</td>
+            <td>无</td>
+        </tr>
+        <tr>
+            <td>201</td>
+            <td>物理原理</td>
+            <td>3</td>
+            <td>李老师</td>
+            <td>数学基础</td>
+        </tr>
+        <!-- 更多行... -->
+    </tbody>
+</table>
+
+</body>
+</html>

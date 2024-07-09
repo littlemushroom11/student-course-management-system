@@ -1,0 +1,21 @@
+{% extends "background.html" %}
+{% block login_container %}
+    <div class="login-kind-title">我是老师</div>
+    {% if from_url == "register" %}
+        <br>
+        <div class="welcome" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp注册成功,欢迎您!&nbsp 您的教职工号是 {{ tno }}.</div>
+    {% else %}
+        <div class="welcome"><br><br></div>
+    {% endif %}
+    <div class = "form">
+        <form method="post" action="/teacherlogin/">
+            {% csrf_token %}
+            {{form.as_p}}
+            <div class="submit-button">
+                <input type="submit" value="登录"/>
+                <a href="{% url 'tearegister' %}">
+                    注册</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

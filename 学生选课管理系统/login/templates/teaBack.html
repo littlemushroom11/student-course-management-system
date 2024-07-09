@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>学生选课管理系统</title>
+    <link href="{% static 'css/course_main.css' %}" rel="stylesheet">
+    <style>
+        body { background-color: white; }
+        .header { background-color: #1f529b; color: white; text-align: left; padding: 10px;height: 130px; }
+        .welcome { padding: 5px; font-size: 18px; color:white}
+        .sidebar { width: 200px; background-color: #dee1e7;; position: absolute; top: auto; height: 100%; }
+        .content { margin-left: 210px; }
+        table { width: 90%; border-collapse: collapse; margin-top: 20px;margin-left: 40px;}
+        .table2 { width: 35%; border-collapse: collapse; margin-top: 20px;margin-left: 40px;}
+        th, td { border: 1px solid black; padding: 8px; text-align: left; }
+        .submit-button input,
+        .submit-button a {
+            border: none;
+            text-decoration: none;
+            font-size: 18px;
+            background: #1f529b;
+            color: #eeeeee;
+            padding: 15px 0;
+            text-align: center;
+            display: block;
+            width: 65%;
+            height: 15%;
+            margin: 0 auto;
+            border-radius: 10px;
+            }
+        .head_message { font-size: 35px }
+        .table_name {frot-size: 15px; color:black}
+        .container { height: 40%;
+                           width: 400px;
+                           margin: 0 auto;
+                           background: #eee;
+                           border-radius: 10px;
+                           box-shadow: 0 0 15px 2px rgba(0, 0, 0, 0.63);
+                           overflow: hidden;
+                         }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="head_message">学生选课管理系统</div>
+        <div class="welcome">
+            {% block welcome_block %}
+            {% endblock %}
+        </div>
+    </div>
+    <div class="sidebar">
+        {% block selection %}
+        {% endblock %}
+    </div>
+    <div class="content">
+        {% block table_container %}
+        {% endblock %}
+    </div>
+</body>
+</html>
